@@ -1,0 +1,41 @@
+@namespace PegasusSignificantWhitespaceExample
+@classname SignificantWhitespaceParser
+@using Pegasus.Common
+@using System.Linq
+
+program <object>
+  = #{ state["Indentation"] = 0; } s:statements eof { s }
+
+statements
+  = line+
+
+line <object>
+  = INDENTATION s:statement { s }
+
+statement <object>
+  = s:simpleStatement eol { s }
+  / "if" _ n:name _? ":" eol INDENT s:statements UNDENT { new { Condition = n, Statements = s } }
+  / "def" _ n:name _? ":" eol INDENT s:statements UNDENT { new { Name = n, Statements = s } }
+
+simpleStatement <object>
+  = a:name _? "=" _? b:name { new { LValue = a, Expression = b } }
+
+name
+  = n:([a-zA-Z] [a-zA-Z0-9]*) { n }
+
+_ = [ \t]+
+
+eol = _? comment? ("\r\n" / "\n\r" / "\r" / "\n" / eof)
+
+comment = "//" [^\r\n]*
+
+eof = !.
+
+INDENTATION
+  = spaces:" "* &{ spaces.Count == state["Indentation"] }
+
+INDENT
+  = #{ state["Indentation"] += 4; }
+
+UNDENT
+  = #{ state["Indentation"] -= 4; }

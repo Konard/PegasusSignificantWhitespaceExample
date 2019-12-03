@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Pegasus" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PegGrammar Include="Significant.peg" />
+  </ItemGroup>
+
+</Project>
