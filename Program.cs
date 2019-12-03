@@ -7,16 +7,16 @@ namespace PegasusSignificantWhitespaceExample
     {
         static void Main()
         {
-            var source = @"a = b
-if a:
-    a = b
-    if q:
-        a = z
-        d = f
-    b = c
-    def q:
-        a = c
-c = d";
+            var source = @"a
+a
+    b
+    q
+        z
+        f
+    b
+    q
+        c
+d";
 
             try
             {
